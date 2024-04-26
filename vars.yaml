@@ -1,0 +1,49 @@
+fromVersion: "v1.17.0"
+
+# Databases specific variables
+postgresql: &postgres
+  # For generating passwords
+  # `openssl rand -hex 20`
+  postgresqlPassword: "changeMePassword"
+  postgresqlHost: "postgresql.db.svc.cluster.local"
+  postgresqlPort: "5432"
+  postgresqlUser: "postgres"
+  postgresqlDatabase: "postgres"
+  # resources:
+  #   requests:
+  #     memory: 256Mi
+  #     cpu: 250m
+  #   limits:
+  #     memory: 3000Mi
+  # asdf
+  #     cpu: 2
+
+
+global:
+  ingress: *ingress-nginx
+  postgresql: *postgres
+  kafka: *kafka
+  redis: *redis
+  quickwit: *quickwit
+  clickhouse: *clickhouse
+  # Registry URL from where the OR images should be pulled.
+  openReplayContainerRegistry: "public.ecr.aws/p1t3u8a3"
+  # secret key to inject to assist and peers service
+  assistKey: "SetARandomStringHere"
+  assistJWTSecret: "SetARandomStringHere"
+  # In case of multiple nodes in the kubernetes cluster,
+  # we'll have to create an RWX PVC for shared components.
+  # If it's a single node, we'll use hostVolume, which is the default for the community/oss edition.
+  pvcRWXName: "hostPath"
+  email:
+    emailHost: ''
+    emailPort: '587'
+    emailUser: ''
+    emailPassword: ''
+    emailUseTls: 'true'
+    emailUseSsl: 'false'
+    emailSslKey: ''
+    emailSslCert: ''
+    emailFrom: 'OpenReplay<do-not-reply@openreplay.com>'
+
+  domainName: "openreplay.company.com"
